@@ -9,15 +9,14 @@ module.exports = (env, argv) => {
     devtool: isProduction ? 'source-map' : 'eval-source-map',
     
     entry: {
-      config: './src/js/config.js',
-      desktop: './src/js/desktop.js'
-    },
+  config: '../src/js/config.js',
+  desktop: '../src/js/desktop.js'
+}
 
-    output: {
-      path: path.resolve(__dirname, 'dist/js'),
-      filename: '[name].js',
-      clean: true
-    },
+output: {
+  path: path.resolve(__dirname, '../dist/js'),
+  filename: '[name].js'
+},
 
     module: {
       rules: [

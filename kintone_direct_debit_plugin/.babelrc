@@ -4,9 +4,43 @@
       "@babel/preset-env",
       {
         "targets": {
-          "browsers": ["last 2 versions", "not dead"]
-        }
+          "browsers": ["last 2 versions", "not dead", "ie 11"]
+        },
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
     ]
-  ]
+  ],
+  "plugins": [],
+  "env": {
+    "production": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "browsers": ["last 2 versions", "not dead"]
+            },
+            "modules": false,
+            "useBuiltIns": "usage",
+            "corejs": 3
+          }
+        ]
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            },
+            "useBuiltIns": "usage",
+            "corejs": 3
+          }
+        ]
+      ]
+    }
+  }
 }

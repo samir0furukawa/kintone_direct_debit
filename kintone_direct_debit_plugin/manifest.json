@@ -17,7 +17,12 @@
   "icon": "image/icon.png",
   "desktop": {
     "js": [
-      "js/config.js",
+      "js/lib/kintoneapi.js",
+      "js/lib/appbuilder.js",
+      "js/lib/fieldmapper.js",
+      "js/lib/formatter.js",
+      "js/lib/validator.js",
+      "js/lib/filehandler.js",
       "js/desktop.js"
     ],
     "css": [
@@ -28,6 +33,8 @@
   "config": {
     "html": "html/config.html",
     "js": [
+      "js/lib/kintoneapi.js",
+      "js/lib/fieldmapper.js",
       "js/config.js"
     ],
     "css": [

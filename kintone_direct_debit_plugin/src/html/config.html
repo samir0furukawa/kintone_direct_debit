@@ -1,0 +1,517 @@
+<!-- src/html/config.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing Plugin Configuration</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+  <div class="config-container">
+    <!-- Header -->
+    <div class="config-header">
+      <h1>⚙️ Configuration Settings</h1>
+      <p>Configure all parameters for billing automation plugin</p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="config-tabs">
+      <button class="config-tab active" data-tab="general">
+        📋 General
+      </button>
+      <button class="config-tab" data-tab="apps">
+        📱 App IDs
+      </button>
+      <button class="config-tab" data-tab="fields">
+        🔗 Fields
+      </button>
+      <button class="config-tab" data-tab="bank">
+        🏦 Bank
+      </button>
+      <button class="config-tab" data-tab="holidays">
+        🎏 Holidays
+      </button>
+      <button class="config-tab" data-tab="advanced">
+        ⚡ Advanced
+      </button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="config-content">
+
+      <!-- 1. General Settings Tab -->
+      <div id="general" class="config-tab-content active">
+        <h2>General Settings</h2>
+
+        <div class="config-section">
+          <h3>Plugin Settings</h3>
+          
+          <div class="config-group">
+            <label class="config-label">Plugin Version</label>
+            <input type="text" id="version" class="config-input" placeholder="2.0.0" disabled>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="enableImport" class="config-checkbox" checked>
+              <label for="enableImport">Enable Import Module</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="enableExport" class="config-checkbox" checked>
+              <label for="enableExport">Enable Export Module</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="enableCalendar" class="config-checkbox" checked>
+              <label for="enableCalendar">Enable Calendar UI</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="autoLock" class="config-checkbox" checked>
+              <label for="autoLock">Auto-lock Records After Export</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Processing Settings</h3>
+
+          <div class="config-group">
+            <label class="config-label">Batch Size (records per API call)</label>
+            <input type="number" id="batchSize" class="config-input" value="100" min="10" max="500">
+            <span class="config-help-text">Recommended: 100 (API limit)</span>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Default Export Format</label>
+            <select id="defaultExportFormat" class="config-select">
+              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="csv">CSV (.csv)</option>
+            </select>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Target View ID</label>
+            <input type="text" id="targetViewId" class="config-input" placeholder="15929930">
+            <span class="config-help-text">List view ID where plugin will be active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. App IDs Tab -->
+      <div id="apps" class="config-tab-content">
+        <h2>Kintone Application IDs</h2>
+
+        <div class="config-section">
+          <h3>Import Source Apps</h3>
+          
+          <div class="config-group">
+            <label class="config-label">CSV Import App</label>
+            <input type="number" id="appImport" class="config-input" placeholder="720">
+            <span class="config-help-text">App for storing imported CSV data</span>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Processing Apps</h3>
+
+          <div class="config-group">
+            <label class="config-label">Bank Export App (請求)</label>
+            <input type="number" id="appBankExport" class="config-input" placeholder="722">
+            <span class="config-help-text">App containing billing data for bank transfer</span>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Bank Results App (結果取込)</label>
+            <input type="number" id="appBankResults" class="config-input" placeholder="724">
+            <span class="config-help-text">App for importing bank processing results</span>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Company Master App</label>
+            <input type="number" id="appCompanyMaster" class="config-input" placeholder="721">
+            <span class="config-help-text">App with company codes and information</span>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">SEQ Mapping App</label>
+            <input type="number" id="appSeqMapping" class="config-input" placeholder="720">
+            <span class="config-help-text">App mapping SEQ numbers to company codes</span>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Output Apps</h3>
+
+          <div class="config-group">
+            <label class="config-label">Full Results App</label>
+            <input type="number" id="appFullResults" class="config-input" placeholder="725">
+            <span class="config-help-text">App storing all aggregated results</span>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Filtered Results App (result == '0')</label>
+            <input type="number" id="appFilteredResults" class="config-input" placeholder="726">
+            <span class="config-help-text">App storing only successful records</span>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Summary App</h3>
+
+          <div class="config-group">
+            <label class="config-label">Export Summary App</label>
+            <input type="number" id="appSummary" class="config-input" placeholder="723">
+            <span class="config-help-text">App for storing export operation summaries</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Fields Tab -->
+      <div id="fields" class="config-tab-content">
+        <h2>Kintone Field Codes</h2>
+
+        <div class="config-section">
+          <h3>Billing/Banking Fields</h3>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Bill Date Field</label>
+              <input type="text" id="fieldBillDate" class="config-input" placeholder="bill_date">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Bill Amount Field</label>
+              <input type="text" id="fieldBillAmount" class="config-input" placeholder="bill_amount">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Bank Code Field</label>
+              <input type="text" id="fieldBankCode" class="config-input" placeholder="bank_code">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Bank Name Field</label>
+              <input type="text" id="fieldBankName" class="config-input" placeholder="bank_name">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Branch Code Field</label>
+              <input type="text" id="fieldBranchCode" class="config-input" placeholder="branch_code">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Branch Name Field</label>
+              <input type="text" id="fieldBranchName" class="config-input" placeholder="branch_name">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Account Type Field</label>
+              <input type="text" id="fieldAccountType" class="config-input" placeholder="account_type">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Account Number Field</label>
+              <input type="text" id="fieldAccountNo" class="config-input" placeholder="account_no">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Customer Name Field</label>
+              <input type="text" id="fieldCustomerName" class="config-input" placeholder="customer_name">
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Company/Master Fields</h3>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Company Code Field</label>
+              <input type="text" id="fieldCompanyCode" class="config-input" placeholder="company_code">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Company Name Field</label>
+              <input type="text" id="fieldCompanyName" class="config-input" placeholder="company_name">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">LV Code Field</label>
+              <input type="text" id="fieldLVcode" class="config-input" placeholder="LVcode">
+            </div>
+            <div class="config-group">
+              <label class="config-label">SEQ Field</label>
+              <input type="text" id="fieldSeq" class="config-input" placeholder="seq">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Transfer Type Field</label>
+              <input type="text" id="fieldTransferType" class="config-input" placeholder="transfer_type">
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Result/Status Fields</h3>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Result Field</label>
+              <input type="text" id="fieldResult" class="config-input" placeholder="result">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Data Lock Field</label>
+              <input type="text" id="fieldDataLock" class="config-input" placeholder="data_lock">
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Export Exclusion Fields</h3>
+
+          <div class="config-group">
+            <label class="config-label">Exclude Fields (comma-separated)</label>
+            <textarea id="excludeFields" class="config-textarea" placeholder="$id,$revision,レコード番号,更新者,作成者,data_lock,bank_name"></textarea>
+            <span class="config-help-text">Fields to exclude from exports</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Bank Settings Tab -->
+      <div id="bank" class="config-tab-content">
+        <h2>Bank Format Configuration (全銀フォーマット)</h2>
+
+        <div class="config-section">
+          <h3>Header Record Settings</h3>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Bank Code (4 digits)</label>
+              <input type="text" id="bankCode" class="config-input" placeholder="0001" maxlength="4">
+              <span class="config-help-text">Example: 0001 for Mizuho Bank</span>
+            </div>
+            <div class="config-group">
+              <label class="config-label">Bank Name (Katakana, 15 chars)</label>
+              <input type="text" id="bankNameKana" class="config-input" placeholder="ミズホ" maxlength="15">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Branch Code (3 digits)</label>
+              <input type="text" id="branchCode" class="config-input" placeholder="125" maxlength="3">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Branch Name (Katakana, 15 chars)</label>
+              <input type="text" id="branchNameKana" class="config-input" placeholder="ギンザチユウオウ" maxlength="15">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Company Use Code (10 digits)</label>
+              <input type="text" id="companyUseCode" class="config-input" placeholder="0000000000" maxlength="10">
+            </div>
+            <div class="config-group">
+              <label class="config-label">Company Name (Katakana, 40 chars)</label>
+              <input type="text" id="companyNameKana" class="config-input" placeholder="ヤブシキカイシャ" maxlength="40">
+            </div>
+          </div>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">Account Type Code</label>
+              <select id="accountTypeCode" class="config-select">
+                <option value="1">1 - Normal (普通)</option>
+                <option value="2">2 - Checking (当座)</option>
+                <option value="3">3 - Tax Reserve (納税準備)</option>
+                <option value="9">9 - Other (その他)</option>
+              </select>
+            </div>
+            <div class="config-group">
+              <label class="config-label">Bank Account Number (7 digits)</label>
+              <input type="text" id="bankAccountNo" class="config-input" placeholder="0000000" maxlength="7">
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>CSV Import Settings</h3>
+
+          <div class="config-field-row">
+            <div class="config-group">
+              <label class="config-label">CSV Encoding</label>
+              <select id="csvEncoding" class="config-select">
+                <option value="utf8">UTF-8</option>
+                <option value="sjis">Shift_JIS</option>
+                <option value="eucjp">EUC-JP</option>
+              </select>
+            </div>
+            <div class="config-group">
+              <label class="config-label">CSV Line Delimiter</label>
+              <select id="csvLineDelimiter" class="config-select">
+                <option value="auto">Auto-detect</option>
+                <option value="lf">LF (\n)</option>
+                <option value="crlf">CRLF (\r\n)</option>
+                <option value="cr">CR (\r)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Transfer Type Required Value</label>
+            <input type="text" id="transferTypeValue" class="config-input" placeholder="口座振替">
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Holidays Tab -->
+      <div id="holidays" class="config-tab-content">
+        <h2>Japanese Holidays Configuration</h2>
+
+        <div class="config-section">
+          <h3>Holiday Source</h3>
+
+          <div class="config-group">
+            <label class="config-label">Holiday Update Method</label>
+            <select id="holidayUpdateMethod" class="config-select">
+              <option value="api">Fetch from API (holidays-jp.github.io)</option>
+              <option value="manual">Manual List</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="config-section" id="apiHolidaySettings">
+          <h3>API Settings</h3>
+
+          <div class="config-group">
+            <label class="config-label">Holiday API URL</label>
+            <input type="text" id="holidayApiUrl" class="config-input" value="https://holidays-jp.github.io/api/v1/date.json">
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="autoRefreshHolidays" class="config-checkbox" checked>
+              <label for="autoRefreshHolidays">Auto-refresh Holidays</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Refresh Frequency (days)</label>
+            <input type="number" id="refreshFrequency" class="config-input" value="7" min="1" max="365">
+          </div>
+
+          <button class="btn btn-secondary" id="testHolidayBtn">Test Holiday Loading</button>
+          <div id="holidayTestResult" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="config-section" id="manualHolidaySettings" style="display:none;">
+          <h3>Manual Holiday List</h3>
+
+          <div class="config-group">
+            <label class="config-label">Holidays (YYYY-MM-DD, one per line)</label>
+            <textarea id="manualHolidayList" class="config-textarea" placeholder="2026-01-01
+2026-01-13
+2026-02-11"></textarea>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Working Day Configuration</h3>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="excludeWeekends" class="config-checkbox" checked>
+              <label for="excludeWeekends">Exclude Weekends (Saturday & Sunday)</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Advanced Tab -->
+      <div id="advanced" class="config-tab-content">
+        <h2>Advanced Settings</h2>
+
+        <div class="config-section">
+          <h3>Processing Options</h3>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="enableDebugMode" class="config-checkbox">
+              <label for="enableDebugMode">Enable Debug Mode</label>
+            </div>
+            <span class="config-help-text">Shows detailed logs in console</span>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="enableErrorReporting" class="config-checkbox" checked>
+              <label for="enableErrorReporting">Enable Error Reporting</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">API Timeout (milliseconds)</label>
+            <input type="number" id="apiTimeout" class="config-input" value="30000">
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">API Retries</label>
+            <input type="number" id="apiRetries" class="config-input" value="3" min="1" max="10">
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h3>Export Options</h3>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="includeSourceMaps" class="config-checkbox">
+              <label for="includeSourceMaps">Include Source Maps in Export</label>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="addBOM" class="config-checkbox" checked>
+              <label for="addBOM">Add UTF-8 BOM to CSV Exports</label>
+            </div>
+            <span class="config-help-text">Ensures Excel recognizes encoding correctly</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="config-actions">
+      <button id="resetBtn" class="btn btn-danger">🔄 Reset to Defaults</button>
+      <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+      <button id="saveBtn" class="btn btn-primary">✓ Save Configuration</button>
+    </div>
+
+    <!-- Status Message -->
+    <div id="statusMessage" class="config-status"></div>
+  </div>
+
+  <script src="../js/config.js"></script>
+</body>
+</html>

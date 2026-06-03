@@ -1,40 +1,172 @@
-# Dependencies
+# ============================================================================
+# DEPENDENCIES
+# ============================================================================
 node_modules/
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
 
-# Build output
+
+# ============================================================================
+# BUILD OUTPUT & ARTIFACTS
+# ============================================================================
 dist/
 build/temp/
 *.js.map
+*.css.map
+*.tar.gz
 
-# Environment
+# Keep the actual plugin ZIP for releases (uncomment if desired)
+# !dist/kintone-*.zip
+# !dist/kintone-*.zip.sig
+
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
 .env
 .env.local
 .env.*.local
+.env.production.local
+.env.development.local
+.env.test.local
 
-# IDE
+
+# ============================================================================
+# IDE & EDITOR
+# ============================================================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+.vscode-insiders
+.ionide
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Logs
+
+# ============================================================================
+# LOGS
+# ============================================================================
 logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
 
-# Test coverage
+
+# ============================================================================
+# TEST COVERAGE
+# ============================================================================
 coverage/
 .nyc_output/
+.coverage
+htmlcov/
 
-# Build artifacts
-*.zip
-*.tar.gz
 
-# Temporary files
+# ============================================================================
+# BUILD TOOL CACHES
+# ============================================================================
+.cache/
+.eslintcache
+.webpack/
+.babel-cache/
+tsconfig.tsbuildinfo
+
+
+# ============================================================================
+# TEMPORARY & WORKING FILES
+# ============================================================================
 temp/
 tmp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ============================================================================
+# JEST & TEST RUNNER
+# ============================================================================
+.jest/
+jest.config.js.bak
+
+
+# ============================================================================
+# GIT SPECIFIC
+# ============================================================================
+.git/
+.gitmodules
+
+
+# ============================================================================
+# PACKAGE MANAGEMENT
+# ============================================================================
+npm-shrinkwrap.json
+.npm/
+
+
+# ============================================================================
+# RUNTIME
+# ============================================================================
+.node_repl_history
+*.tgz
+
+
+# ============================================================================
+# DEVELOPMENT TOOLS
+# ============================================================================
+.parcel-cache
+.next
+out/
+.nuxt
+dist/
 .cache/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+
+# ============================================================================
+# CUSTOM FOR KINTONE PLUGIN
+# ============================================================================
+# Build artifacts
+*.zip
+!dist/kintone-billing-plugin.zip
+
+# Plugin temp files
+plugin-temp/
+plugin-build/
+
+# API keys or credentials (extra safety)
+*.key
+*.pem
+*.p12
+secrets/
+credentials/

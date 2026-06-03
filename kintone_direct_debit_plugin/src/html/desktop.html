@@ -1,0 +1,304 @@
+<!-- src/html/desktop.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing Automation Master Control</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/desktop.css">
+</head>
+<body>
+  <div class="master-control-container">
+    
+    <!-- Header -->
+    <div class="desktop-header">
+      <h1>🎛️ Billing Automation Control Panel</h1>
+      <p>One-click setup and management for billing automation</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-section="dashboard">📊 Dashboard</button>
+      <button class="nav-tab" data-section="create-apps">➕ Create Apps</button>
+      <button class="nav-tab" data-section="configure">⚙️ Configure</button>
+      <button class="nav-tab" data-section="operations">🔄 Operations</button>
+      <button class="nav-tab" data-section="logs">📋 Logs</button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+
+      <!-- 1. Dashboard Section -->
+      <section id="dashboard" class="content-section active">
+        <h2>System Status Dashboard</h2>
+        
+        <div class="status-grid">
+          <div class="status-card">
+            <h3>📱 Apps Status</h3>
+            <div id="appsStatus">
+              <p>Loading...</p>
+            </div>
+            <button class="btn btn-secondary" onclick="checkAppsStatus()">Refresh Status</button>
+          </div>
+
+          <div class="status-card">
+            <h3>📊 Configuration</h3>
+            <div id="configStatus">
+              <p>Loading...</p>
+            </div>
+            <button class="btn btn-secondary" onclick="viewConfiguration()">View Full Config</button>
+          </div>
+
+          <div class="status-card">
+            <h3>⚡ Quick Actions</h3>
+            <button class="btn btn-primary" onclick="runFullSetup()">🚀 Run Full Setup</button>
+            <button class="btn btn-warning" onclick="validateConfiguration()">✓ Validate Config</button>
+            <button class="btn btn-danger" onclick="resetAllSettings()">🔄 Reset All</button>
+          </div>
+
+          <div class="status-card">
+            <h3>📈 Statistics</h3>
+            <p>Total Records: <strong id="totalRecords">0</strong></p>
+            <p>Last Import: <strong id="lastImport">Never</strong></p>
+            <p>Locked Records: <strong id="lockedRecords">0</strong></p>
+          </div>
+        </div>
+
+        <div class="recent-activity">
+          <h3>Recent Activity</h3>
+          <table id="activityTable" class="activity-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Action</th>
+                <th>Status</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="activityBody">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2. Create Apps Section -->
+      <section id="create-apps" class="content-section">
+        <h2>Create Required Applications</h2>
+
+        <div class="wizard-step">
+          <h3>Step 1: Review App Templates</h3>
+          <div class="app-templates">
+            <div class="template-card">
+              <h4>CSV Import Storage</h4>
+              <p>Stores imported CSV billing data</p>
+              <ul>
+                <li>SEQ (required)</li>
+                <li>Company Code & Name</li>
+                <li>Bill Date & Amount</li>
+                <li>Data Lock field</li>
+              </ul>
+            </div>
+
+            <div class="template-card">
+              <h4>Bank Export Preparation</h4>
+              <p>Billing data ready for bank transfer</p>
+              <ul>
+                <li>Bank & Branch codes</li>
+                <li>Account information</li>
+                <li>Customer & Amount</li>
+                <li>Data Lock field</li>
+              </ul>
+            </div>
+
+            <div class="template-card">
+              <h4>Bank Processing Results</h4>
+              <p>Results from bank processing</p>
+              <ul>
+                <li>Result codes</li>
+                <li>Company mapping</li>
+                <li>LV code tracking</li>
+                <li>Data Lock field</li>
+              </ul>
+            </div>
+
+            <div class="template-card">
+              <h4>Company Master Data</h4>
+              <p>Master data for companies & LV codes</p>
+              <ul>
+                <li>Company Code (unique)</li>
+                <li>Company Name</li>
+                <li>LV Code mapping</li>
+                <li>Status tracking</li>
+              </ul>
+            </div>
+
+            <div class="template-card">
+              <h4>Complete Results</h4>
+              <p>Aggregated billing results (all records)</p>
+              <ul>
+                <li>Joined company data</li>
+                <li>Enriched billing info</li>
+                <li>Result codes</li>
+                <li>Data Lock field</li>
+              </ul>
+            </div>
+
+            <div class="template-card">
+              <h4>Successful Results</h4>
+              <p>Successfully processed (result = "0")</p>
+              <ul>
+                <li>Filtered to success only</li>
+                <li>Ready for archive</li>
+                <li>Company details included</li>
+                <li>Data Lock field</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <h3>Step 2: Configure Space (Optional)</h3>
+          <div class="config-group">
+            <div class="config-checkbox-group">
+              <input type="checkbox" id="useSpace">
+              <label for="useSpace">Create in Dedicated Space</label>
+            </div>
+          </div>
+          <div class="config-group" id="spaceIdLabel" style="display:none;">
+            <label class="config-label">Space ID</label>
+            <input type="number" id="spaceId" class="config-input" placeholder="Leave blank to use default space">
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <h3>Step 3: Create Applications</h3>
+          <button class="btn btn-primary btn-large" onclick="createAllApps()">✨ Create All Apps Now</button>
+          <p class="config-help-text">This will create 6 new applications and configure them automatically</p>
+          
+          <div id="createProgress" style="display:none; margin-top: 20px;">
+            <div class="progress-bar">
+              <div id="createProgressFill"></div>
+            </div>
+            <p id="createProgressText">Initializing...</p>
+          </div>
+        </div>
+
+        <div id="createdAppsResult" style="display:none; margin-top: 30px;">
+          <h3>✓ Apps Created Successfully!</h3>
+          <table id="createdAppsTable" class="activity-table">
+            <thead>
+              <tr>
+                <th>App Name</th>
+                <th>App ID</th>
+                <th>Status</th>
+                <th>Fields</th>
+              </tr>
+            </thead>
+            <tbody id="createdAppsBody"></tbody>
+          </table>
+          <button class="btn btn-primary" onclick="proceedToConfiguration()">Next: Configure Apps →</button>
+        </div>
+      </section>
+
+      <!-- 3. Configure Section -->
+      <section id="configure" class="content-section">
+        <h2>Configuration & Parameters</h2>
+        <p>Configure your plugin settings. <a href="#" onclick="switchSection('dashboard')">Go to dashboard →</a></p>
+      </section>
+
+      <!-- 4. Operations Section -->
+      <section id="operations" class="content-section">
+        <h2>Automation Operations</h2>
+
+        <div class="operations-grid">
+          <div class="operation-card">
+            <h3>📥 Import CSV Data</h3>
+            <p>Import billing data from CSV file</p>
+            <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+            <button class="btn btn-primary" onclick="triggerCsvImport()">Select CSV File</button>
+            <div id="csvImportProgress" style="display:none; margin-top: 15px;">
+              <div class="progress-bar">
+                <div id="csvProgressFill"></div>
+              </div>
+              <p id="csvProgressText">0%</p>
+            </div>
+          </div>
+
+          <div class="operation-card">
+            <h3>🏦 Export to Bank Format</h3>
+            <p>Generate bank transfer file (全銀フォーマット)</p>
+            <select id="bankExportFormat" class="config-select">
+              <option value="txt">TXT (Fixed-Length)</option>
+              <option value="csv">CSV</option>
+            </select>
+            <button class="btn btn-primary" onclick="exportToBankFormat()">Export Bank File</button>
+          </div>
+
+          <div class="operation-card">
+            <h3>📤 Import Bank Results</h3>
+            <p>Import bank processing results</p>
+            <input type="file" id="bankResultsFileInput" accept=".txt,.csv" style="display:none;">
+            <button class="btn btn-primary" onclick="triggerBankResultsImport()">Select Results File</button>
+          </div>
+
+          <div class="operation-card">
+            <h3>🔄 Aggregate & Distribute</h3>
+            <p>Run master join and data distribution</p>
+            <button class="btn btn-primary" onclick="runDataAggregation()">Start Aggregation</button>
+          </div>
+
+          <div class="operation-card">
+            <h3>📊 Export Results</h3>
+            <p>Download results as CSV or Excel</p>
+            <select id="resultsExportApp" class="config-select">
+              <option value="725">Full Results</option>
+              <option value="726">Successful Results</option>
+            </select>
+            <select id="resultsExportFormat" class="config-select">
+              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="csv">CSV (.csv)</option>
+            </select>
+            <button class="btn btn-primary" onclick="exportResults()">Export Results</button>
+          </div>
+
+          <div class="operation-card">
+            <h3>🔒 Lock Management</h3>
+            <p>Lock or unlock records</p>
+            <button class="btn btn-secondary" onclick="lockRecords()">Lock All</button>
+            <button class="btn btn-warning" onclick="unlockRecords()">Unlock All</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Logs Section -->
+      <section id="logs" class="content-section">
+        <h2>System Logs & Debugging</h2>
+
+        <div class="logs-toolbar">
+          <button class="btn btn-secondary" onclick="clearLogs()">Clear Logs</button>
+          <button class="btn btn-secondary" onclick="downloadLogs()">Download Logs</button>
+          <button class="btn btn-secondary" onclick="refreshLogs()">Refresh</button>
+        </div>
+
+        <div class="log-container">
+          <div id="logContent">
+            <!-- Logs populated by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Status Footer -->
+    <div class="footer">
+      <p>Last Updated: <span id="lastUpdated">Loading...</span></p>
+      <p>Plugin Version: <span id="pluginVersion">2.0.0</span></p>
+    </div>
+  </div>
+
+  <script src="../js/desktop.js"></script>
+</body>
+</html>
