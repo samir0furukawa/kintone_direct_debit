@@ -1,3 +1,7 @@
+# Remove corrupted package.json
+rm package.json
+
+# Create fresh package.json (paste this entire block)
 cat > package.json << 'EOF'
 {
   "name": "kintone-billing-plugin",
@@ -10,7 +14,13 @@ cat > package.json << 'EOF'
     "type": "git",
     "url": "https://github.com/samir0furukawa/kintone_direct_debit.git"
   },
-  "keywords": ["kintone", "plugin", "billing", "automation", "bank-transfer"],
+  "keywords": [
+    "kintone",
+    "plugin",
+    "billing",
+    "automation",
+    "bank-transfer"
+  ],
   "main": "dist/kintone-billing-plugin.zip",
   "scripts": {
     "dev": "webpack --config build/webpack.config.js --mode development --watch",
@@ -43,7 +53,7 @@ cat > package.json << 'EOF'
     "dotenv": "^16.4.5"
   },
   "dependencies": {
-    "xlsx": "^0.18.5"
+    "exceljs": "^4.4.0"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -52,4 +62,4 @@ cat > package.json << 'EOF'
 }
 EOF
 
-echo "✓ Updated package.json with secure versions"
+echo "✓ package.json created"
