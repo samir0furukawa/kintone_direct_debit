@@ -1,8 +1,3 @@
-# Remove corrupted package.json
-rm package.json
-
-# Create fresh package.json (paste this entire block)
-cat > package.json << 'EOF'
 {
   "name": "kintone-billing-plugin",
   "version": "2.0.0",
@@ -60,6 +55,3 @@ cat > package.json << 'EOF'
     "npm": ">=8.0.0"
   }
 }
-EOF
-
-echo "✓ package.json created"
