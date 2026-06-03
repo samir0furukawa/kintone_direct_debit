@@ -1,0 +1,45 @@
+{
+  "manifest_version": 1,
+  "version": "2.0.0",
+  "name": {
+    "en": "Kintone Billing Automation - Master Control",
+    "ja": "Kintone請求自動化マスターコントロール"
+  },
+  "description": {
+    "en": "One-click setup: Auto-creates all required apps and manages billing automation",
+    "ja": "ワンクリック設定：必要なアプリを自動作成し、請求自動化を管理"
+  },
+  "author": "Your Company",
+  "homepage_url": {
+    "en": "https://yourcompany.com/plugins/billing",
+    "ja": "https://yourcompany.com/ja/plugins/billing"
+  },
+  "icon": "image/icon.png",
+  "desktop": {
+    "js": [
+      "js/config.js",
+      "js/desktop.js"
+    ],
+    "css": [
+      "css/common.css",
+      "css/desktop.css"
+    ]
+  },
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "js/config.js"
+    ],
+    "css": [
+      "css/common.css",
+      "css/config.css"
+    ]
+  },
+  "requiredPermissions": [
+    "app:read",
+    "app:write",
+    "record:read",
+    "record:write",
+    "record:delete"
+  ]
+}
