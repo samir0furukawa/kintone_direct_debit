@@ -1,3 +1,4 @@
+cat > build/webpack.config.js << 'EOF'
 const path = require('path');
 const webpack = require('webpack');
 
@@ -7,17 +8,15 @@ module.exports = (env, argv) => {
   return {
     mode: argv.mode || 'development',
     devtool: isProduction ? 'source-map' : 'eval-source-map',
-    
     entry: {
-  config: '../src/js/config.js',
-  desktop: '../src/js/desktop.js'
-}
-
-output: {
-  path: path.resolve(__dirname, '../dist/js'),
-  filename: '[name].js'
-},
-
+      config: './src/js/config.js',
+      desktop: './src/js/desktop.js'
+    },
+    output: {
+      path: path.resolve(__dirname, '../dist/js'),
+      filename: '[name].js',
+      clean: true
+    },
     module: {
       rules: [
         {
@@ -32,10 +31,7 @@ output: {
         },
         {
           test: /\.css$/,
-          use: [
-            'style-loader',
-            'css-loader'
-          ]
+          use: ['style-loader', 'css-loader']
         },
         {
           test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -46,7 +42,6 @@ output: {
         }
       ]
     },
-
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development'),
@@ -54,12 +49,10 @@ output: {
         'process.env.BUILD_DATE': JSON.stringify(new Date().toISOString())
       })
     ],
-
     optimization: {
       minimize: isProduction,
       usedExports: true
     },
-
     performance: {
       hints: isProduction ? 'warning' : false,
       maxEntrypointSize: 512000,
@@ -67,3 +60,6 @@ output: {
     }
   };
 };
+EOF
+
+echo "✓ webpack.config.js fixed"
