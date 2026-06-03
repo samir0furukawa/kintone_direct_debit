@@ -51,7 +51,7 @@ module.exports = (env, argv) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development'),
-        'process.env.VERSION': JSON.stringify(require('./package.json').version),
+        'process.env.VERSION': JSON.stringify(require('../package.json').version),
         'process.env.BUILD_DATE': JSON.stringify(new Date().toISOString())
       })
     ],
